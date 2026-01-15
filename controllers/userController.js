@@ -77,6 +77,7 @@ export async function loginUser(req, res) {
   }
 }
 
+// Delete a user
 export async function deleteUser(req, res) {
   try {
     const { email } = req.body;
@@ -100,6 +101,7 @@ export async function deleteUser(req, res) {
   }
 }
 
+// Update user details
 export async function updateUser(req, res) {
   try {
     const { email, name, password } = req.body;
