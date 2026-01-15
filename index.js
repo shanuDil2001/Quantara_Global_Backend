@@ -6,6 +6,7 @@ import userRouter from "./routes/userRouter.js";
 import connectToMongoDB from "./config/connectToMongoDB.js";
 import QsJobRouter from "./routes/qsJobRouter.js";
 import ItJobRouter from "./routes/itJobRouter.js";
+import feedbackRouter from "./routes/feedbackRouter.js";
 
 // Section 02: Create the express app
 const app = express();
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
 app.use("/api/users/", userRouter);
 app.use("/api/qs-jobs/", QsJobRouter);
 app.use("/api/it-jobs/", ItJobRouter);
+app.use("api/feedbacks", feedbackRouter);
 
 // Section 07: Start the server
 const PORT = env.PORT || 3000;
