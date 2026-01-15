@@ -2,20 +2,14 @@ import Feedback from "../models/feedback.js";
 
 export async function createFeedback(req, res) {
   try {
-    const { name, email, rating, message } = req.body;
+    const { name, rating, message } = req.body;
 
-    if (!name || !email || !rating || !message) {
+    if (!name || !rating || !message) {
       return res.status(400).json({
-        message: "All fields (name, email, rating, message) are required",
+        message: "All fields (name, rating, message) are required",
       });
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({
-        message: "Invalid email format",
-      });
-    }
 
     if (rating < 1 || rating > 5) {
       return res.status(400).json({
@@ -31,7 +25,6 @@ export async function createFeedback(req, res) {
 
     const feedback = await Feedback.create({
       name,
-      email,
       rating,
       message,
     });
