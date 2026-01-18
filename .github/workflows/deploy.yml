@@ -26,26 +26,24 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # Step 4: Build and push Docker image (force rebuild)
+      # Step 4: Build and push Docker image
       - name: Build and push Docker image
         run: |
-          # Use commit SHA as image tag
+          # Use first 8 chars of commit SHA as unique image tag
           IMAGE_TAG=${GITHUB_SHA::8}
-          
-          # Build image with no cache
+
+          echo "Building Docker image with no cache..."
           docker build --no-cache -t backend .
-          
-          # Tag image for ECR with commit SHA
+
+          echo "Tagging Docker image..."
           docker tag backend:latest ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:$IMAGE_TAG
-          
-          # Also tag latest for convenience
           docker tag backend:latest ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest
-          
-          # Push both tags
+
+          echo "Pushing Docker image to ECR..."
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:$IMAGE_TAG
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest
-          
-          # Output the image tag for deployment
+
+          # Export IMAGE_TAG for next steps
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       # Step 5: Deploy to EC2
@@ -55,18 +53,21 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs: IMAGE_TAG=${{ env.IMAGE_TAG }}  # Correct usage
           script: |
-            echo "Pulling latest Docker image..."
-            docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:${IMAGE_TAG}
-            
+            echo "Pulling Docker image with tag $IMAGE_TAG..."
+            sudo docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:$IMAGE_TAG
+
             echo "Stopping old container..."
-            docker stop backend || true
-            docker rm backend || true
-            
+            sudo docker stop backend || true
+            sudo docker rm backend || true
+
             echo "Running new container..."
-            docker run -d \
+            sudo docker run -d \
               -p 5005:5005 \
               --env-file /home/ec2-user/backend/.env \
               --name backend \
               --restart=always \
-              ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:${IMAGE_TAG}
+              ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:$IMAGE_TAG
+
+            echo "Deployment complete!"
