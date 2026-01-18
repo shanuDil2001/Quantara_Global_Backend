@@ -32,7 +32,7 @@ connectToMongoDB();
 
 // Section 06: Define routes
 app.get("/", (req, res) => {
-  res.send("Welcome to the Quantara Global Backend!");
+  res.send("Welcome to the Quantara Global Backend! testing");
 });
 app.use("/api/users/", userRouter);
 app.use("/api/qs-jobs/", QsJobRouter);
