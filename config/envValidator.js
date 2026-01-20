@@ -1,7 +1,7 @@
 import { z } from "zod";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load .env file into process.env
+dotenv.config(); // Load .env file into process.env.
 
 const envSchema = z.object({
   PORT: z.string().optional().default("3000").transform(Number),
