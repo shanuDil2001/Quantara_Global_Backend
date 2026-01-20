@@ -226,13 +226,13 @@ export async function sendEmailWorkDoneIT(job) {
   const mailOptions = {
     from: "vishishtadilsara2002@gmail.com",
     to: job.email,
-    subject: "✅ Your IT Job Has Been Completed",
+    subject: "Your IT Job Has Been Completed",
     html: `
       <div style="font-family: Arial, sans-serif; padding: 20px; background: #f7f7fc;">
         <div style="max-width: 600px; margin: auto; background: #fff; padding: 25px;
                     border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
 
-          <h2 style="color: #4CAF50; text-align: center;">🎉 Job Completed</h2>
+          <h2 style="color: #4CAF50; text-align: center;">✅ Job Completed</h2>
 
           <p>Hello <strong>${job.name}</strong>,</p>
 
