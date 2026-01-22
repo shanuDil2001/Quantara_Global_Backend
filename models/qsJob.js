@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const QsJobSchema = new mongoose.Schema({
+  qsJobId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -23,8 +28,12 @@ const QsJobSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "rejected", "completed"],
+    enum: ["pending", "approved", "done", "rejected"],
     default: "pending",
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 

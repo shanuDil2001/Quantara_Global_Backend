@@ -6,9 +6,18 @@ import {
 
 export async function createQsJob(req, res) {
   try {
+    const lastJob = await QsJob.findOne().sort({ date: -1 });
+
+    let qsJobId = "QS00001";
+    if (lastJob?.qsJobId) {
+      const lastNum = parseInt(lastJob.qsJobId.replace("QS", ""), 10);
+      const nextNum = lastNum + 1;
+      qsJobId = "QS" + String(nextNum).padStart(5, "0");
+    }
     const { name, email, whatsappNumber, jobCategory, message } = req.body;
 
     const newQsJob = new QsJob({
+      qsJobId,
       name,
       email,
       whatsappNumber,
