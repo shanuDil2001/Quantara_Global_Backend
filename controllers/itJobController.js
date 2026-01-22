@@ -6,10 +6,19 @@ import {
 
 export async function createItJob(req, res) {
   try {
+    const lastJob = await ItJob.findOne().sort({ date: -1 });
+
+    let itJobId = "IT00001";
+    if (lastJob?.itJobId) {
+      const lastNum = parseInt(lastJob.itJobId.replace("IT", ""), 10);
+      const nextNum = lastNum + 1;
+      itJobId = "IT" + String(nextNum).padStart(5, "0");
+    }
     const { name, email, whatsappNumber, itSolutionType, jobDescription } =
       req.body;
 
     const newItJob = new ItJob({
+      itJobId,
       name,
       email,
       whatsappNumber,
