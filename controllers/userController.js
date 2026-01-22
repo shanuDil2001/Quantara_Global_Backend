@@ -241,7 +241,7 @@ export async function sendEmailWorkDoneIT(job) {
           </p>
 
           <div style="margin-top: 15px;">
-            <p><strong>Job ID:</strong> ${job._id}</p>
+            <p><strong>Job ID:</strong> ${job.itJobId}</p>
             <p><strong>Service:</strong> ${job.itSolutionType}</p>
           </div>
 
@@ -289,7 +289,7 @@ export async function sendEmailWorkDoneQS(job) {
           </p>
 
           <div style="margin-top: 15px;">
-            <p><strong>Job ID:</strong> ${job._id}</p>
+            <p><strong>Job ID:</strong> ${job.qsJobId}</p>
             <p><strong>Service:</strong> ${job.jobCategory}</p>
           </div>
 
@@ -338,7 +338,7 @@ export async function sendEmailJobApprovedQS(job) {
           </p>
 
           <div style="margin-top: 15px;">
-            <p><strong>Job ID:</strong> ${job._id}</p>
+            <p><strong>Job ID:</strong> ${job.qsJobId}</p>
             <p><strong>Service:</strong> ${job.jobCategory}</p>
           </div>
 
@@ -388,7 +388,7 @@ export async function sendEmailJobApprovedIT(job) {
           </p>
 
           <div style="margin-top: 15px;">
-            <p><strong>Job ID:</strong> ${job._id}</p>
+            <p><strong>Job ID:</strong> ${job.itJobId}</p>
             <p><strong>Service:</strong> ${job.itSolutionType}</p>
           </div>
 
