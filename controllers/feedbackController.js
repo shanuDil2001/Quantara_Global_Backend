@@ -49,7 +49,7 @@ export async function getFeedbacks(req, res) {
 
     const filter = isAdmin ? {} : { status: "approved" };
 
-    const feedbacks = await Feedback.find().sort({ createdAt: -1 });
+    const feedbacks = await Feedback.find(filter).sort({ createdAt: -1 });
 
     return res.status(200).json({
       message: "Feedbacks retrieved successfully",
