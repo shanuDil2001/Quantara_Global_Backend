@@ -10,7 +10,7 @@ const feedbackRouter = express.Router();
 
 feedbackRouter.post("/", createFeedback);
 feedbackRouter.get("/", getFeedbacks);
-feedbackRouter.put("/", updateFeedbackStatus);
-feedbackRouter.delete("/", deleteFeedback);
+feedbackRouter.put("/:id", updateFeedbackStatus);
+feedbackRouter.delete("/:id", deleteFeedback);
 
 export default feedbackRouter;
