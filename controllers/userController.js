@@ -383,7 +383,7 @@ export async function sendEmailJobApprovedIT(job) {
           <p>Hello <strong>${job.name}</strong>,</p>
 
           <p>
-            We’re pleased to inform you that your QS job has been <strong>reviewed and approved</strong>.
+            We’re pleased to inform you that your IT job has been <strong>reviewed and approved</strong>.
             Our team will proceed with the next steps shortly.
           </p>
 
